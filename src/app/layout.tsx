@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
-
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 
 export const fontSans = FontSans({
@@ -14,11 +14,12 @@ export default function RootLayout({ children }: any) {
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          // "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
