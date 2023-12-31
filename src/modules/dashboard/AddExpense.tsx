@@ -90,44 +90,6 @@ export function AddExpenseForm() {
         />
         <FormField
           control={form.control}
-          name="expenseType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Expense Type</FormLabel>
-              <FormControl>
-                <ExpenseSelector
-                  placeholder="Select the Type of expense"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about expense"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can add remarks, <span>@mention</span> any other person or a
-                memory.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="amount"
           render={({ field }) => (
             <FormItem>
@@ -146,6 +108,45 @@ export function AddExpenseForm() {
                     field.onChange(e);
                   }}
                   onChange={undefined}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Write a bit about expense"
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                You can add remarks, <span>@mention</span> any other person or a
+                memory.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="expenseType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Expense Type</FormLabel>
+              <FormControl>
+                <ExpenseSelector
+                  placeholder="Select the Type of expense"
+                  className="resize-none"
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
