@@ -1,8 +1,6 @@
 import { auth, sheets as googleSheets } from "@googleapis/sheets";
-import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import { AddExpensePayload, Expense } from "@/types/expense";
 import { format } from "date-fns";
 
