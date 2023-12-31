@@ -25,7 +25,7 @@ export function Dashboard() {
       <Card className="w-[350px] mx-auto">
         <CardHeader>
           <CardTitle>Welcome Back</CardTitle>
-          <CardDescription>Add your today's expense</CardDescription>
+          <CardDescription>Add your today&apos;s expense</CardDescription>
         </CardHeader>
         <CardFooter className="flex justify-end">
           <DrawerTrigger>

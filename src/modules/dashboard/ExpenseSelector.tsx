@@ -37,3 +37,5 @@ export const ExpenseSelector = React.forwardRef(
     );
   }
 );
+
+ExpenseSelector.displayName = "ExpenseSelector";

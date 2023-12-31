@@ -37,3 +37,4 @@ export const TransactionSelector = React.forwardRef(
     );
   }
 );
+TransactionSelector.displayName = "TransactionSelector";
