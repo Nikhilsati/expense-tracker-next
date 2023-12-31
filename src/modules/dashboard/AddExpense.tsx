@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { ExpenseSelector } from "./ExpenseSelector";
 import { TransactionSelector } from "./TransactionSelector";
 import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { Loader2 as Loader } from "lucide-react";
 
 const FormSchema = z.object({
   description: z.string(),
@@ -40,20 +42,30 @@ export function AddExpenseForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("this is calling");
+  const [loading, setLoading] = useState(false);
 
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      setLoading(true);
+      let response: any = await fetch("/api/addExpense", {
+        method: "POST",
+        body: JSON.stringify([{ ...data, amount: parseFloat(data.amount) }]),
+      });
+      response = await response.json();
+      console.log({ response });
 
-  console.log({ form, values: form.getValues() });
+      toast({
+        title: response.message,
+      });
+      setLoading(false);
+    } catch (err: any) {
+      console.log({ err });
+      toast({
+        title: err.message,
+      });
+      setLoading(false);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -95,6 +107,27 @@ export function AddExpenseForm() {
         />
         <FormField
           control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Tell us a little bit about expense"
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                You can add remarks, <span>@mention</span> any other person or a
+                memory.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="amount"
           render={({ field }) => (
             <FormItem>
@@ -102,6 +135,8 @@ export function AddExpenseForm() {
               <FormControl>
                 <Input
                   placeholder="Enter Amount"
+                  pattern="[0–9+-*//]*"
+                  inputMode="tel"
                   {...field}
                   defaultValue={field.value}
                   value={undefined}
@@ -134,28 +169,13 @@ export function AddExpenseForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about expense"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can add remarks or <span>@mention</span> any other person or
-                memory.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Add Expense</Button>
+
+        <div className="flex gap-2 items-center">
+          <Button type="submit" disabled={loading}>
+            Add Expense
+          </Button>
+          {loading && <Loader className="h-5 w-5 animate-spin" />}
+        </div>
       </form>
     </Form>
   );
